@@ -1,0 +1,5 @@
+.ImageContainer{
+    grid-area: imagebox;
+    height: calc(100vh - 15vh);
+    overflow-y: scroll;
+}

@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'ComicBlock'; /*a name to be used later*/
+    src: url('../assests/ComicBlock.ttf'); /*URL to font*/
+}
+
+.TopBar{
+    grid-area: topbar;
+    margin-top: 7px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading{
+    font-family: 'ComicBlock';
+    font-size: 2rem;
+    font-style: italic;
+}

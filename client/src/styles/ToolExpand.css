@@ -1,0 +1,12 @@
+.ToolExpand{
+    padding: 5px;
+    margin: 3px;
+    grid-area: adboxr;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+}
