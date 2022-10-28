@@ -2,4 +2,27 @@
     grid-area: imagebox;
     height: calc(100vh - 15vh);
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#c {
+    border: 1px solid;
+    /* width: 50vw;
+    height: 60vh; */
+}
+
+.imageCanvasCont{}
+
+.uploadButtonCont{}
+
+.uploadButton{
+    padding: 7px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 3px;
+    border: 0px;
+    font-size: large;
 }
