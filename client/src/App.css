@@ -13,7 +13,7 @@ body{
   "topbar topbar topbar"
   "toolbar imagebox tooldet";
   grid-template-columns: 2fr 6fr 2fr;
-  grid-template-rows:    1fr 9fr;
+  grid-template-rows:    1.15fr 8fr;
   background-color: rgb(44, 44, 44);
   color: #444;
   margin-left: 5px;

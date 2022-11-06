@@ -12,8 +12,14 @@
     align-items: center;
 }
 
+.appIcon{
+    height: 7vh;
+}
+
 .heading{
     font-family: 'ComicBlock';
     font-size: 2rem;
     font-style: italic;
 }
+
+
