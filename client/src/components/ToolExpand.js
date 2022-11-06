@@ -1,10 +1,11 @@
 import '../styles/ToolExpand.css'
+import './ImageDetails'
+import ImageDetails from './ImageDetails';
 
 function ToolExpand() {
-
     return (
       <div className="ToolExpand">
-        {/* <img className="ladvertimg" src="https://i.imgur.com/usxNJS3.png" alt="advert1" onClick={radclick}/> */}
+        <ImageDetails/>
       </div>
     );
   }

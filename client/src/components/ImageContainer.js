@@ -1,10 +1,17 @@
 import '../styles/ImageContainer.css'
 import { TbUpload } from "react-icons/tb";
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+// import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { setDims } from '../sharedObjects/dimsSlice';
+
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
 function ImageContainer() {
   // const [newsArticles, set_newsArticles] = useState([]);
+  const dispatch = useDispatch();
 
   var canvas;
   var ctx;
@@ -12,32 +19,28 @@ function ImageContainer() {
 
   useEffect(() => {
     canvas = document.getElementById("c");
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
     canvas.setAttribute('width', `${0.5*vw}`);
     canvas.setAttribute('height', `${0.6*vh}`);
     ctx = canvas.getContext('2d');
+    // set state variable of img dims to canvas dims
+    dispatch(setDims({w: ctx.canvas.clientWidth, h: ctx.canvas.clientHeight}));
     img = new Image();
     // var aspectRatio = this.width/this.height;
     img.addEventListener('load', function() {
       ctx.imageSmoothingQuality = "high";
       console.log("image load");
-      console.log(ctx);
-      console.log(img);
-      console.log(this.width, this.height);
-      console.log(ctx.canvas.clientWidth, ctx.canvas.clientHeight);
-      console.log(canvas.width, canvas.height);
       var scalingFactor;
       if( (this.width-ctx.canvas.clientWidth) > (this.height-ctx.canvas.clientHeight) )
       scalingFactor = ctx.canvas.clientWidth/this.width;
       else
-        scalingFactor = ctx.canvas.clientHeight/this.height;
+      scalingFactor = ctx.canvas.clientHeight/this.height;
       console.log((this.width-ctx.canvas.clientWidth) > (this.height-ctx.canvas.clientHeight));
       console.log(scalingFactor);
-      var imgWidth  = scalingFactor*this.width;
-      var imgHeight = scalingFactor*this.height;
+      var imgWidth  = Math.floor(scalingFactor*this.width);
+      var imgHeight = Math.floor(scalingFactor*this.height);
+      // update state variable of img dims to actual img dims
+      dispatch(setDims({w: imgWidth, h: imgHeight}));
       console.log(imgWidth, imgHeight);
-      ctx.filter = 'none';
       var xOffset = (ctx.canvas.clientWidth-imgWidth)/2;
       var yOffset = (ctx.canvas.clientHeight-imgHeight)/2;
       ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);

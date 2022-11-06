@@ -1,3 +1,30 @@
-.ToolBar{
+.Tool{
+    padding: 8px;
+    margin: 10px;
+    width: 35%;
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #444;  
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.5);
+}
 
+.Tool:hover{
+    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.5);
+}
+
+.Tool:active{
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.5);
+}
+
+.logoContainer{
+    font-size: xx-large;
+}
+
+.nameContainer{
+    font-size: medium;
 }

@@ -11,7 +11,7 @@ body{
   grid-gap: 2px;
   grid-template-areas:
   "topbar topbar topbar"
-  "adboxl imagebox adboxr";
+  "toolbar imagebox tooldet";
   grid-template-columns: 2fr 6fr 2fr;
   grid-template-rows:    1fr 9fr;
   background-color: rgb(44, 44, 44);
