@@ -10,4 +10,4 @@ async def root():
 
 @app.post("/upload/{filter_name}")
 async def get_file_image(filter_name: str):
-    return filter_name
+    return {"filter_name" : filter_name}
