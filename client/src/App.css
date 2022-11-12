@@ -13,14 +13,14 @@ body{
   "topbar topbar topbar"
   "toolbar imagebox tooldet";
   grid-template-columns: 2fr 6fr 2fr;
-  grid-template-rows:    1.15fr 8fr;
+  grid-template-rows:    1.2fr 8.8fr;
   background-color: rgb(44, 44, 44);
   color: #444;
   margin-left: 5px;
   margin-right: 5px;
 }
 
-.ImageContainer, .TopBar{
+.ImageContainer {
   background-color: #444;
   color: #fff;
   border-radius: 5px;

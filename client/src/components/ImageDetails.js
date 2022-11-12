@@ -1,10 +1,10 @@
-import '../styles/ImageDetails.css'
+import '../styles/ImageDetails.css';
 import { useSelector } from 'react-redux';
 import { selectDims } from '../sharedObjects/dimsSlice';
 
 function ImageDetails(props) {
   const dims = useSelector(selectDims);
-  console.log(dims);
+  // console.log(dims);
     return (
       <div className="ImageDetails">
         <div className="titleContainer"><span>Dimensions:</span></div>

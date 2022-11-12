@@ -12,6 +12,15 @@
     align-items: center;
 }
 
+ .TopBar{
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 3px;
+  /* font-size: 150%; */
+}
+
 .appIcon{
     height: 7vh;
 }

@@ -1,4 +1,4 @@
-import '../styles/Tool.css'
+import '../styles/Tool.css';
 
 function Tool(props) {
     return (
