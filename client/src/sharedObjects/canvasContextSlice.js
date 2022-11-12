@@ -4,8 +4,8 @@ export const canvasContextSlice = createSlice({
   name: 'canvasContext'
   , initialState: {
     value: {
-      canvasEl: {}
-      , canvasCtx: {}
+      // canvasEl: {},
+      canvasCtx: {}
     }
   }
   , reducers: {

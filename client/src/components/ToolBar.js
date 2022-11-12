@@ -5,27 +5,29 @@ import { MdBlurOn } from "react-icons/md";
 import Tool from './Tool'
 import '../styles/ToolBar.css'
 
-import { useSelector } from 'react-redux';
-import { selectCanvasContext } from '../sharedObjects/canvasContextSlice';
+// import { useSelector } from 'react-redux';
+// import { selectCanvasContext } from '../sharedObjects/canvasContextSlice';
 
 
 function ToolBar() {
-  const canvasContext = useSelector(selectCanvasContext);
+  // const canvasContext = useSelector(selectCanvasContext);
 
   async function cropButtonClick(){
     console.log("cropButtonClick");
-    var base64img = canvasContext.canvas.toDataURL("image/png").replace('data:image/.+;base64,','');
-    let formData = new FormData();
-    formData.append('image', base64img);
+    var base64img = document.getElementById("c").toDataURL("image/png").replace('data:image/png;base64,','');
+    // let formData = new FormData();
+    // formData.append('image', base64img);
 
-    await fetch('http://localhost:/8000/upload/lol', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+    let res = await fetch("http://localhost:8000/upload/lol", {
+      mode: 'cors',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({image: base64img}),
     });
+    let resjson = await res.json();
+    console.log(resjson);
   }
 
   return (

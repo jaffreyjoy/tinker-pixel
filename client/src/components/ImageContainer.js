@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { setDims } from '../sharedObjects/dimsSlice';
-import { setCanvasContext } from '../sharedObjects/canvasContextSlice';
+// import { setCanvasContext } from '../sharedObjects/canvasContextSlice';
 import { setImg } from '../sharedObjects/imgSlice';
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -24,14 +24,15 @@ function ImageContainer() {
     canvas.setAttribute('width', `${0.5*vw}`);
     canvas.setAttribute('height', `${0.6*vh}`);
     ctx = canvas.getContext('2d');
-    dispatch(setCanvasContext({canvasEl: canvas, canvasCtx: ctx}));
+    // dispatch(setCanvasContext({canvasCtx: ctx}));
+    // dispatch(setCanvasContext({canvasEl: canvas, canvasCtx: ctx}));
     // set state variable of img dims to canvas dims
     dispatch(setDims({w: ctx.canvas.clientWidth, h: ctx.canvas.clientHeight}));
     img = new Image();
     // var aspectRatio = this.width/this.height;
     img.addEventListener('load', function() {
       console.log("image load");
-      dispatch(setImg(img));
+      // dispatch(setImg(img));
       ctx.imageSmoothingQuality = "high";
 
       var scalingFactor;
