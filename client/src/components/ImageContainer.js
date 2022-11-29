@@ -95,6 +95,19 @@ function ImageContainer() {
       console.log(document.getElementById("g"));
       console.log(document.getElementById("c"));
 
+      // origIcanvas = document.getElementById("g");
+      // // gcanvas = document.createElement('canvas');
+      // // gcanvas.id = "g";
+      // var gimg = img;
+      // var gctx = gcanvas.getContext('2d');
+      // gctx.imageSmoothingQuality = "high";
+      // gcanvas.width=this.width;
+      // gcanvas.height=this.height;
+      // console.log(this.width, this.height);
+      // console.log(gcanvas.width, gcanvas.height);
+      // // gctx.clearRect(0, 0, gcanvas.width, gcanvas.height);
+      // gctx.drawImage(gimg, 0, 0, this.width, this.height);
+
 
       console.log('store: ', store.getState());
       // window.URL.revokeObjectURL(this.src);

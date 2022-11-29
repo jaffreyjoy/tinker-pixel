@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 
 
@@ -186,8 +187,8 @@ def ColourQuantization(image, K=9):
         res2 = res.reshape((image.shape))
         # cv2.cvtColor(res2, cv2.COLOR_RGB2BGR)
         return res2
-    except:
-        print("Some Error Occured in ColourQuantization")
+    except Exception as e:
+        print("Some Error Occured in ColourQuantization: ", e)
         return img1
 
 
@@ -220,9 +221,9 @@ def cartoon2(image):
         # Using cv2.imwrite() method
         # Saving the image      
         cv2.imwrite(filename, final_image)      
-        return contoured
-    except:
-        print("Some Error Occured in Contours")
+        return final_image
+    except Exception as e:
+        print("Some Error Occured in Contours: ", e)
         return img1
 
 
@@ -232,18 +233,18 @@ def shift(image):
         change=1
         count=0
         for i in range(int(image.shape[0])):
-            count+=1;
+            count+=1
             if(change==1):
                 
                 for j in range(0,image.shape[1]-100):
-                    img5[i][j+random.randrange(1, 100)]=img[i][j]
+                    img5[i][j+random.randrange(1, 100)]=image[i][j]
                 if(count>1):
                     change=-1
                     count=0
 
             else:
                 for j in range(image.shape[1]-100,0,-1):
-                    img5[i][j-random.randrange(1, 100)]=img[i][j]
+                    img5[i][j-random.randrange(1, 100)]=image[i][j]
                 if(count>1):
                     change=1
                     count=0
@@ -251,7 +252,7 @@ def shift(image):
         result=cv2.cvtColor(img5, cv2.COLOR_RGB2BGR)
         cv2.imwrite('Thanos_effect.jpg',result )  
         print(img5.shape)
-        return img5
+        return result
     except:
         return image
 
@@ -265,14 +266,14 @@ def lostintheworlds(image):
             if(change==1):
                 
                 for j in range(0,image.shape[1]-100):
-                    img5[i][j+100]=img[i][j]
+                    img5[i][j+100]=image[i][j]
                 if(count>1):
                     change=-1
                     count=0
 
             else:
                 for j in range(image.shape[1]-100,0,-1):
-                    img5[i][j-100]=img[i][j]
+                    img5[i][j-100]=image[i][j]
                 if(count>1):
                     change=1
                     count=0
@@ -280,8 +281,10 @@ def lostintheworlds(image):
         result=cv2.cvtColor(img5, cv2.COLOR_RGB2BGR)
         cv2.imwrite('lostintheworld.jpg', result)  
         print(img5.shape)
+        return result
         
-    except:
+    except Exception as e:
+        print('error:', e)
         return  image
 # cartoon2(img)
 # exit()

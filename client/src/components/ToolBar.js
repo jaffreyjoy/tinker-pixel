@@ -5,8 +5,8 @@ import { SiGoogleearth } from "react-icons/si";
 import { BsImage, BsPencil } from "react-icons/bs";
 import { FaPaintRoller, FaHandSparkles } from "react-icons/fa";
 import { GiEyedropper, GiPencilBrush } from "react-icons/gi";
-import { IoMdContrast } from "react-icons/io";
-import { IoColorPalette } from "react-icons/io5";
+import { IoMdContrast} from "react-icons/io";
+import { IoColorPalette, IoGlassesOutline } from "react-icons/io5";
 import { RiMickeyLine, RiContrast2Line } from "react-icons/ri";
 import { TbBrightnessUp, Tb3DRotate } from "react-icons/tb";
 import { CgEditContrast, CgDropInvert, CgDropOpacity } from "react-icons/cg";
@@ -26,7 +26,9 @@ function ToolBar() {
 
   async function serverToolButtonClick(e){
     console.log("cropButtonClick");
-    var base64img = document.getElementById("g").toDataURL("image/png").replace('data:image/png;base64,','');
+    var base64img = (e.target.id=="spec" || e.target.id=="oilpaint" || e.target.id=="blurredbeauty" || e.target.id=="cartoon" || e.target.id=="colorsoflife")
+                    ?document.getElementById("g").toDataURL("image/jpeg").replace('data:image/jpeg;base64,','')
+                    :document.getElementById("g").toDataURL("image/png").replace('data:image/png;base64,','');
     // let formData = new FormData();
     // formData.append('image', base64img);
 
@@ -42,15 +44,18 @@ function ToolBar() {
     console.log(resjson);
 
     // get response image url
-    var origImgAsUrl = resjson.img;
+    var origImgAsUrl = 'data:image/png;base64,' + resjson.img;
+
+    console.log(origImgAsUrl.substring(0, 100));
 
     if(origImgAsUrl){
+      console.log("response seems good");
       var imgx = new Image();
       // var aspectRatio = this.width/this.height;
       imgx.addEventListener('load', function() {
+        console.log("image load");
         var mainCanvas = document.getElementById("c");
         var mainCtx = mainCanvas.getContext('2d');
-        console.log("image load");
         mainCtx.imageSmoothingQuality = "high";
 
         var hscalingFactor;
@@ -78,6 +83,7 @@ function ToolBar() {
         mainCtx.drawImage(this, xOffset, yOffset, imgWidth, imgHeight);
 
 
+
         var gcanvasx = document.getElementById("g");
         var gctx = gcanvasx.getContext('2d');
         gctx.imageSmoothingQuality = "high";
@@ -93,8 +99,11 @@ function ToolBar() {
 
         // window.URL.revokeObjectURL(this.src);
       }, false);
-
-      imgx.src = origImgAsUrl;
+      try {
+        imgx.src = origImgAsUrl;
+      } catch (error) {
+        console.log('fail lol: ', error);
+      }
     }
 
   }
@@ -117,11 +126,11 @@ function ToolBar() {
       <Tool icon={<GiEyedropper/>} label={"Saturation"} toolName="saturate" onClickHandler={localToolButtonClick}/>
       <Tool icon={<BsImage/>} label={"Sepia"} toolName="sepia" onClickHandler={localToolButtonClick}/>
       <br/>
-      <Tool icon={<RiMickeyLine/>} label={"Cartoonify"} toolName="cartoonify" onClickHandler={serverToolButtonClick}/>
+      {/* <Tool icon={<RiMickeyLine/>} label={"Cartoonify"} toolName="cartoon" onClickHandler={serverToolButtonClick}/> */}
       <Tool icon={<IoColorPalette/>} label={"Colors of Life"} toolName="colorsoflife" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<MdBlurLinear/>} label={"Blurred Beauty"} toolName="blurredbeauty" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<FaPaintRoller/>} label={"Oil Paint"} toolName="oilpaint" onClickHandler={serverToolButtonClick}/>
-      <Tool icon={<AiOutlineSelect/>} label={"Specify"} toolName="specify" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<IoGlassesOutline/>} label={"Specify"} toolName="spec" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<FaHandSparkles/>} label={"Thanos Effect"} toolName="thanoseffect" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<SiGoogleearth/>} label={"Lost in the World"} toolName="lostintheworld" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<BsPencil/>} label={"Pencil Sketch"} toolName="pencilsketch" onClickHandler={serverToolButtonClick}/>

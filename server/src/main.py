@@ -35,13 +35,13 @@ async def get_file_image(filter_name: str, request: Request):
     rjson = await request.json()
 
     # Decoding the img sent as base64 in the request body 
-    img = imread(io.BytesIO(base64.b64decode(rjson["image"].encode("ascii"))),cv2.IMREAD_UNCHANGED)
+    img = imread(io.BytesIO(base64.b64decode(rjson["image"].encode("ascii"))))
 
     #Which filter to apply    
     if(filter_name=="spec"):
         print("type of image from decoding = ", type(img))
-        f_img=filters.cartoon2(img)
-        # img=filters.specs(img)
+        # f_img=filters.cartoon2(img)
+        f_img=filters.specs(img)
     elif(filter_name=="oilpaint"):
         f_img=filters.cartoon2(img)
     elif(filter_name=="pencilsketch"):
