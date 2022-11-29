@@ -1,11 +1,16 @@
+import { AiOutlineSelect } from "react-icons/ai";
 import { BiCrop } from "react-icons/bi";
-import { BsImage } from "react-icons/bs";
-import { GiEyedropper } from "react-icons/gi";
+import { ImPencil2 } from "react-icons/im";
+import { SiGoogleearth } from "react-icons/si";
+import { BsImage, BsPencil } from "react-icons/bs";
+import { FaPaintRoller, FaHandSparkles } from "react-icons/fa";
+import { GiEyedropper, GiPencilBrush } from "react-icons/gi";
 import { IoMdContrast } from "react-icons/io";
-import { RiContrast2Line } from "react-icons/ri";
+import { IoColorPalette } from "react-icons/io5";
+import { RiMickeyLine, RiContrast2Line } from "react-icons/ri";
 import { TbBrightnessUp, Tb3DRotate } from "react-icons/tb";
 import { CgEditContrast, CgDropInvert, CgDropOpacity } from "react-icons/cg";
-import { MdBlurOn } from "react-icons/md";
+import { MdBlurOn, MdBlurLinear } from "react-icons/md";
 import Tool from './Tool'
 import { toolsMetaData } from '../assests/toolsMeta';
 import store  from '../app/store';
@@ -25,7 +30,7 @@ function ToolBar() {
     // let formData = new FormData();
     // formData.append('image', base64img);
 
-    let res = await fetch("http://localhost:8000/upload/lol", {
+    let res = await fetch(`http://localhost:8000/upload/${e.target.id}`, {
       mode: 'cors',
       method: 'post',
       headers: {
@@ -35,6 +40,63 @@ function ToolBar() {
     });
     let resjson = await res.json();
     console.log(resjson);
+
+    // get response image url
+    var origImgAsUrl = resjson.img;
+
+    if(origImgAsUrl){
+      var imgx = new Image();
+      // var aspectRatio = this.width/this.height;
+      imgx.addEventListener('load', function() {
+        var mainCanvas = document.getElementById("c");
+        var mainCtx = mainCanvas.getContext('2d');
+        console.log("image load");
+        mainCtx.imageSmoothingQuality = "high";
+
+        var hscalingFactor;
+        hscalingFactor = mainCtx.canvas.clientHeight/this.height;
+
+        console.log(mainCtx.canvas.clientWidth, mainCtx.canvas.clientHeight);
+        console.log(mainCanvas.width, mainCanvas.height);
+        console.log(hscalingFactor);
+
+        var imgWidth  = Math.floor(hscalingFactor*this.width);
+        var imgHeight = Math.floor(hscalingFactor*this.height);
+
+        if(imgWidth>mainCtx.canvas.clientWidth){
+          var wscalingFactor = mainCtx.canvas.clientWidth/this.width;
+
+          imgWidth  = Math.floor(wscalingFactor*this.width);
+          imgHeight = Math.floor(wscalingFactor*this.height);
+
+          console.log(wscalingFactor);
+        }
+
+        var xOffset = (mainCtx.canvas.clientWidth-imgWidth)/2;
+        var yOffset = (mainCtx.canvas.clientHeight-imgHeight)/2;
+        mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+        mainCtx.drawImage(this, xOffset, yOffset, imgWidth, imgHeight);
+
+
+        var gcanvasx = document.getElementById("g");
+        var gctx = gcanvasx.getContext('2d');
+        gctx.imageSmoothingQuality = "high";
+        gcanvasx.width=this.width;
+        gcanvasx.height=this.height;
+        console.log(this.width, this.height);
+        console.log(gcanvasx.width, gcanvasx.height);
+        gctx.clearRect(0, 0, gcanvasx.width, gcanvasx.height);
+        gctx.drawImage(this, 0, 0, this.width, this.height);
+        console.log(document.getElementById("g"));
+        console.log(document.getElementById("c"));
+
+
+        // window.URL.revokeObjectURL(this.src);
+      }, false);
+
+      imgx.src = origImgAsUrl;
+    }
+
   }
 
   async function localToolButtonClick(e){
@@ -54,6 +116,17 @@ function ToolBar() {
       <Tool icon={<Tb3DRotate/>} label={"Hue Rotate"} toolName="hue-rotate" onClickHandler={localToolButtonClick}/>
       <Tool icon={<GiEyedropper/>} label={"Saturation"} toolName="saturate" onClickHandler={localToolButtonClick}/>
       <Tool icon={<BsImage/>} label={"Sepia"} toolName="sepia" onClickHandler={localToolButtonClick}/>
+      <br/>
+      <Tool icon={<RiMickeyLine/>} label={"Cartoonify"} toolName="cartoonify" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<IoColorPalette/>} label={"Colors of Life"} toolName="colorsoflife" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<MdBlurLinear/>} label={"Blurred Beauty"} toolName="blurredbeauty" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<FaPaintRoller/>} label={"Oil Paint"} toolName="oilpaint" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<AiOutlineSelect/>} label={"Specify"} toolName="specify" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<FaHandSparkles/>} label={"Thanos Effect"} toolName="thanoseffect" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<SiGoogleearth/>} label={"Lost in the World"} toolName="lostintheworld" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<BsPencil/>} label={"Pencil Sketch"} toolName="pencilsketch" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<ImPencil2/>} label={"Experts Pencil"} toolName="expertspencil" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<GiPencilBrush/>} label={"Sketch the Scene"} toolName="sketchthescene" onClickHandler={serverToolButtonClick}/>
     </div>
   );
 }
