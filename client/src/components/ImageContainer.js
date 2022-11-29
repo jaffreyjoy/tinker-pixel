@@ -27,6 +27,7 @@ function ImageContainer() {
   var ctx;
   var img;
   var gcanvas;
+  var origIcanvas;
 
   useEffect(() => {
     canvas = document.getElementById("c");
@@ -83,7 +84,6 @@ function ImageContainer() {
       gcanvas = document.getElementById("g");
       // gcanvas = document.createElement('canvas');
       // gcanvas.id = "g";
-      var gimg = img;
       var gctx = gcanvas.getContext('2d');
       gctx.imageSmoothingQuality = "high";
       gcanvas.width=this.width;
@@ -91,23 +91,21 @@ function ImageContainer() {
       console.log(this.width, this.height);
       console.log(gcanvas.width, gcanvas.height);
       // gctx.clearRect(0, 0, gcanvas.width, gcanvas.height);
-      gctx.drawImage(gimg, 0, 0, this.width, this.height);
+      gctx.drawImage(this, 0, 0, this.width, this.height);
+
+      origIcanvas = document.getElementById("origImgStoreCanvas");
+      var origIgctx = origIcanvas.getContext('2d');
+      origIgctx.imageSmoothingQuality = "high";
+      origIcanvas.width=this.width;
+      origIcanvas.height=this.height;
+      console.log(this.width, this.height);
+      console.log(origIcanvas.width, origIcanvas.height);
+      // origIgctx.clearRect(0, 0, gcanvas.width, gcanvas.height);
+      origIgctx.drawImage(this, 0, 0, this.width, this.height);
+
       console.log(document.getElementById("g"));
       console.log(document.getElementById("c"));
-
-      // origIcanvas = document.getElementById("g");
-      // // gcanvas = document.createElement('canvas');
-      // // gcanvas.id = "g";
-      // var gimg = img;
-      // var gctx = gcanvas.getContext('2d');
-      // gctx.imageSmoothingQuality = "high";
-      // gcanvas.width=this.width;
-      // gcanvas.height=this.height;
-      // console.log(this.width, this.height);
-      // console.log(gcanvas.width, gcanvas.height);
-      // // gctx.clearRect(0, 0, gcanvas.width, gcanvas.height);
-      // gctx.drawImage(gimg, 0, 0, this.width, this.height);
-
+      console.log(document.getElementById("origImgStoreCanvas"));
 
       console.log('store: ', store.getState());
       // window.URL.revokeObjectURL(this.src);

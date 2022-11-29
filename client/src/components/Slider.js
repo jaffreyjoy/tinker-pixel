@@ -35,7 +35,8 @@ function Slider(props) {
     store.dispatch(setFilterProps(newFilterProps));
 
     // get original image as url
-    var origImgAsUrl = document.getElementById("g").toDataURL("image/png");
+    var origImgAsUrl = document.getElementById("origImgStoreCanvas").toDataURL("image/png");
+    console.log('orig img', origImgAsUrl.substring(0,30));
 
     var imgx = new Image();
     imgx.filterString = createFilterString(newFilterProps);
@@ -85,6 +86,7 @@ function Slider(props) {
       gctx.drawImage(this, 0, 0, this.width, this.height);
       console.log(document.getElementById("g"));
       console.log(document.getElementById("c"));
+      console.log(document.getElementById("origImgStoreCanvas"));
 
 
       // window.URL.revokeObjectURL(this.src);
