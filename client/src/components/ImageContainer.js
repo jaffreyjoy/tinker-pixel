@@ -26,6 +26,7 @@ function ImageContainer() {
   var canvas;
   var ctx;
   var img;
+  var gcanvas;
 
   useEffect(() => {
     canvas = document.getElementById("c");
@@ -79,20 +80,23 @@ function ImageContainer() {
       set_canvasState(canvas);
 
 
-      var gcanvas = document.createElement('canvas');
-      gcanvas.id = "g";
-      var gimg = srcImg;
+      gcanvas = document.getElementById("g");
+      // gcanvas = document.createElement('canvas');
+      // gcanvas.id = "g";
+      var gimg = img;
       var gctx = gcanvas.getContext('2d');
       gctx.imageSmoothingQuality = "high";
-      gcanvas.setAttribute('width', `${srcImgWidth}px`);
-      gcanvas.setAttribute('height', `${srcImgHeight}px`);
-      console.log( srcImgWidth, srcImgHeight);
+      gcanvas.width=this.width;
+      gcanvas.height=this.height;
+      console.log(this.width, this.height);
       console.log(gcanvas.width, gcanvas.height);
       // gctx.clearRect(0, 0, gcanvas.width, gcanvas.height);
-      gctx.drawImage(gimg, 0, 0, srcImgWidth, srcImgHeight);
+      gctx.drawImage(gimg, 0, 0, this.width, this.height);
+      console.log(document.getElementById("g"));
+      console.log(document.getElementById("c"));
 
 
-      console.log(store.getState());
+      console.log('store: ', store.getState());
       // window.URL.revokeObjectURL(this.src);
     }, false);
   }, []);
@@ -113,6 +117,7 @@ function ImageContainer() {
   }
 
   function prepareImageForServerOrDownload(){
+    console.log(document.getElementById("g"));
     return document.getElementById("g").toDataURL("image/png");
   }
 
@@ -136,6 +141,7 @@ function ImageContainer() {
   return(
       <div className="ImageContainer">
         <div className="imageCanvasCont"> <canvas id="c"></canvas> </div>
+        <div className="ghostCanvasCont" style={{display:"none"}}> <canvas id="g"></canvas> </div>
         {(uploadDownloadToggle)?
         <div className="uploadButtonCont">
           <button className="uploadButton" onClick={uploadButtonClick}><TbUpload/> Upload</button>
