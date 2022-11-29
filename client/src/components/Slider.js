@@ -104,16 +104,26 @@ function Slider(props) {
   // setSliderDefaultVal(`${toolsMetaData[props.toolName].default}`);
   console.log('toolName props: ', props.toolName);
   console.log('toolLabel props: ', props.toolLabel);
-  console.log(props.toolName, ':: min: ', `${toolsMetaData[props.toolName].min}`, 'max: ', `${toolsMetaData[props.toolName].max}`,'default: ',`${toolsMetaData[props.toolName].default}`);
+  console.log(props.toolName, ':: min: '
+  , `${toolsMetaData[props.toolName].min}`
+  , 'max: ', `${toolsMetaData[props.toolName].max}`
+  ,'default: ',`${toolsMetaData[props.toolName].default}`);
 
   return (
     <div className="Slider">
       <div className="titleContainer"><span>{props.toolLabel} Value:</span></div>
-      <div className="sliderContainer" key={`${toolsMetaData[props.toolName].default}`}>
+      <div
+        className="sliderContainer"
+        key={`${props.toolName}${store.getState().filterProps.value[props.toolName]}`}
+      >
         <input type="range" list="labelList" className="rangeSlider" id="rangeId"
           min={`${toolsMetaData[props.toolName].min}`}
           max={`${toolsMetaData[props.toolName].max}`}
-          defaultValue={`${toolsMetaData[props.toolName].default}`}
+          defaultValue={
+              (store.getState().filterProps.value[props.toolName]==toolsMetaData[props.toolName].default)
+              ?`${toolsMetaData[props.toolName].default}`
+              :`${store.getState().filterProps.value[props.toolName]}`
+          }
           // value={sliderVal}
           onChange={handleSliderChange}
         />

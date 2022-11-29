@@ -142,6 +142,7 @@ function ImageContainer() {
       <div className="ImageContainer">
         <div className="imageCanvasCont"> <canvas id="c"></canvas> </div>
         <div className="ghostCanvasCont" style={{display:"none"}}> <canvas id="g"></canvas> </div>
+        <div className="origImgStore" style={{display:"none"}}> <canvas id="origImgStoreCanvas"></canvas> </div>
         {(uploadDownloadToggle)?
         <div className="uploadButtonCont">
           <button className="uploadButton" onClick={uploadButtonClick}><TbUpload/> Upload</button>
