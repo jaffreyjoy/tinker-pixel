@@ -1,11 +1,16 @@
 import '../styles/ImageContainer.css'
 import { TbUpload, TbDownload } from "react-icons/tb";
+import { toolsMetaData } from '../assests/toolsMeta';
 import React, { useState, useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+import store  from '../app/store';
+import { useSelector, useDispatch } from 'react-redux';
 import { setDims } from '../sharedObjects/dimsSlice';
 // import { setCanvasContext } from '../sharedObjects/canvasContextSlice';
 import { setImg } from '../sharedObjects/imgSlice';
+import { selectImg } from '../sharedObjects/imgSlice';
+import { selectFilterProps } from '../sharedObjects/filterPropsSlice';
+// import { setFilterProps } from '../sharedObjects/filterPropsSlice';
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
@@ -13,6 +18,9 @@ const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeig
 function ImageContainer() {
   const [uploadDownloadToggle, set_uploadDownloadToggle] = useState(true);
   const [canvasState, set_canvasState] = useState({});
+  const [srcImg, setSrcImg] = useState({});
+  const [srcImgWidth, setSrcImgWidth] = useState(0);
+  const [srcImgHeight, setSrcImgHeight] = useState(0);
   const dispatch = useDispatch();
 
   var canvas;
@@ -31,20 +39,34 @@ function ImageContainer() {
     img = new Image();
     // var aspectRatio = this.width/this.height;
     img.addEventListener('load', function() {
+      setSrcImg(img);
+      setSrcImgWidth(this.width);
+      setSrcImgHeight(this.height);
       console.log("image load");
-      // dispatch(setImg(img));
       ctx.imageSmoothingQuality = "high";
 
-      var scalingFactor;
-      if( (this.width-ctx.canvas.clientWidth) > (this.height-ctx.canvas.clientHeight) )
-      scalingFactor = ctx.canvas.clientWidth/this.width;
-      else
-      scalingFactor = ctx.canvas.clientHeight/this.height;
+      var hscalingFactor;
+      // if( Math.abs(this.width-ctx.canvas.clientWidth) > Math.abs(this.height-ctx.canvas.clientHeight) )
+      // scalingFactor = ctx.canvas.clientWidth/this.width;
+      // else
+      hscalingFactor = ctx.canvas.clientHeight/this.height;
 
-      console.log((this.width-ctx.canvas.clientWidth) > (this.height-ctx.canvas.clientHeight));
-      console.log(scalingFactor);
-      var imgWidth  = Math.floor(scalingFactor*this.width);
-      var imgHeight = Math.floor(scalingFactor*this.height);
+      // console.log((this.width-canvas.clientWidth) > (this.height-ctx.canvas.clientHeight));
+      console.log(ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+      console.log(canvas.width, canvas.height);
+      console.log(hscalingFactor);
+      var imgWidth  = Math.floor(hscalingFactor*this.width);
+      var imgHeight = Math.floor(hscalingFactor*this.height);
+
+      if(imgWidth>ctx.canvas.clientWidth){
+        var wscalingFactor = ctx.canvas.clientWidth/this.width;
+
+        imgWidth  = Math.floor(wscalingFactor*this.width);
+        imgHeight = Math.floor(wscalingFactor*this.height);
+
+        console.log(wscalingFactor);
+      }
+
       // update state variable of img dims to actual img dims
       dispatch(setDims({w: imgWidth, h: imgHeight}));
       console.log(imgWidth, imgHeight);
@@ -55,6 +77,22 @@ function ImageContainer() {
       ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
       set_uploadDownloadToggle(false);
       set_canvasState(canvas);
+
+
+      var gcanvas = document.createElement('canvas');
+      gcanvas.id = "g";
+      var gimg = srcImg;
+      var gctx = gcanvas.getContext('2d');
+      gctx.imageSmoothingQuality = "high";
+      gcanvas.setAttribute('width', `${srcImgWidth}px`);
+      gcanvas.setAttribute('height', `${srcImgHeight}px`);
+      console.log( srcImgWidth, srcImgHeight);
+      console.log(gcanvas.width, gcanvas.height);
+      // gctx.clearRect(0, 0, gcanvas.width, gcanvas.height);
+      gctx.drawImage(gimg, 0, 0, srcImgWidth, srcImgHeight);
+
+
+      console.log(store.getState());
       // window.URL.revokeObjectURL(this.src);
     }, false);
   }, []);
@@ -63,9 +101,25 @@ function ImageContainer() {
     document.getElementById('getFile').click();
   }
 
+  function createFilterString(){
+    // const filters = useSelector(selectFilterProps);
+    const filters = store.getState().filterProps.value;
+    var filterString = "";
+    // console.log(toolsMetaData);
+    for (const [key, value] of Object.entries(toolsMetaData)) {
+      filterString += `${key}(${value.default}${value.unit}) `
+    }
+    return filterString.trimEnd();
+  }
+
+  function prepareImageForServerOrDownload(){
+    return document.getElementById("g").toDataURL("image/png");
+  }
+
   function downloadButtonClick(){
     var download = document.createElement('a');
-    download.href = canvasState.toDataURL();
+    // download.href = canvasState.toDataURL();
+    download.href = prepareImageForServerOrDownload();
     download.download = 'img.png';
     download.click();
   }
@@ -75,6 +129,7 @@ function ImageContainer() {
     console.log(imageFile);
     if (imageFile) {
       img.src = window.URL.createObjectURL(imageFile);
+      dispatch(setImg({srcUrl: img.src}));
     }
   }
 

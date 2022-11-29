@@ -6,10 +6,13 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
+    /* align-content: start; */
     justify-content: center;
     background-color: #444;  
     color: #fff;
     border-radius: 5px;
+    height: 37rem;
+    overflow-y: scroll;
 }
 
 

@@ -4,18 +4,19 @@ export const toolsSlice = createSlice({
   name: 'tools'
   , initialState: {
     value: {
-        activeTool: 100
+        activeTool: "brightness"
+        , toolValue: 100
     }
   }
   , reducers: {
-    settools: (state, action) => {
+    setTools: (state, action) => {
       state.value = action.payload
     },
   },
 })
 
-export const { settools } = toolsSlice.actions
+export const { setTools } = toolsSlice.actions
 
-export const selecttools = (state) => state.tools.value
+export const selectTools = (state) => state.tools.value
 
 export default toolsSlice.reducer

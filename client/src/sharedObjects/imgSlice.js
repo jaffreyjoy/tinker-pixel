@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 export const imgSlice = createSlice({
   name: 'img'
   , initialState: {
-    value: ""
+    value: {
+      srcUrl: ""
+    }
   }
   , reducers: {
     setImg: (state, action) => {

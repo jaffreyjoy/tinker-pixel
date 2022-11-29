@@ -23,8 +23,10 @@
 
 .logoContainer{
     font-size: xx-large;
+    pointer-events: none;
 }
 
-.nameContainer{
+.labelContainer{
     font-size: medium;
+    pointer-events: none;
 }
