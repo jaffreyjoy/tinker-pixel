@@ -133,7 +133,7 @@ function ToolBar() {
       <Tool icon={<IoColorPalette/>} label={"Colors of Life"} toolName="colorsoflife" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<MdBlurLinear/>} label={"Blurred Beauty"} toolName="blurredbeauty" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<FaPaintRoller/>} label={"Oil Paint"} toolName="oilpaint" onClickHandler={serverToolButtonClick}/>
-      <Tool icon={<IoGlassesOutline/>} label={"Specify"} toolName="spec" onClickHandler={serverToolButtonClick}/>
+      <Tool icon={<IoGlassesOutline/>} label={"Spec-ify"} toolName="spec" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<FaHandSparkles/>} label={"Thanos Effect"} toolName="thanoseffect" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<SiGoogleearth/>} label={"Lost in the World"} toolName="lostintheworld" onClickHandler={serverToolButtonClick}/>
       <Tool icon={<BsPencil/>} label={"Pencil Sketch"} toolName="pencilsketch" onClickHandler={serverToolButtonClick}/>
