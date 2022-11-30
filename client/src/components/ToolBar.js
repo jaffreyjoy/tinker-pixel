@@ -27,8 +27,11 @@ function ToolBar() {
   async function serverToolButtonClick(e){
     console.log("cropButtonClick");
     var base64img = (e.target.id=="spec" || e.target.id=="oilpaint" || e.target.id=="blurredbeauty" || e.target.id=="cartoon" || e.target.id=="colorsoflife")
-                    ?document.getElementById("g").toDataURL("image/jpeg").replace('data:image/jpeg;base64,','')
-                    :document.getElementById("g").toDataURL("image/png").replace('data:image/png;base64,','');
+                    ?document.getElementById("origImgStoreCanvas").toDataURL("image/jpeg").replace('data:image/jpeg;base64,','')
+                    :document.getElementById("origImgStoreCanvas").toDataURL("image/png").replace('data:image/png;base64,','');
+    // var base64img = (e.target.id=="spec" || e.target.id=="oilpaint" || e.target.id=="blurredbeauty" || e.target.id=="cartoon" || e.target.id=="colorsoflife")
+    //                 ?document.getElementById("g").toDataURL("image/jpeg").replace('data:image/jpeg;base64,','')
+    //                 :document.getElementById("g").toDataURL("image/png").replace('data:image/png;base64,','');
     // let formData = new FormData();
     // formData.append('image', base64img);
 
